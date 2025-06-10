@@ -5,6 +5,12 @@ wget http://github.com/golang-migrate/migrate/releases/latest/download/migrate.l
 sudo dpkg -i migrate.linux-amd64.deb
 ```
 
+## Pegar variáveis de ambiente
+
+```bash
+cp .env.example .env
+```
+
 ## Criar migrations
 
 ```bash
@@ -17,7 +23,7 @@ make create_migration MIGRATION_NAME={NOME_DESEJADO_DA_MIGRATION (ex:add_user_ph
 make migrate_up
 ```
 
-## Rodar migrations
+## Voltar migrations
 
 ```bash
 make migrate_down
