@@ -8,5 +8,23 @@ sudo dpkg -i migrate.linux-amd64.deb
 ## Criar migrations
 
 ```bash
-migrate create -ext=sql -dir=internal/database/migrations -seq {NOME_DA_MIGRAION}
+make create_migration MIGRATION_NAME={NOME_DESEJADO_DA_MIGRATION (ex:add_user_phone)}
+```
+
+## Rodar migrations
+
+```bash
+make migrate_up
+```
+
+## Rodar migrations
+
+```bash
+make migrate_down
+```
+
+## Ajuda com migrations
+
+```bash
+make help
 ```
