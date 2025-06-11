@@ -21,6 +21,7 @@ type UserResponse struct {
 	Phone string `json:"phone"`
 }
 
+// ToDto returns a UserResponse object common to the whole application
 func ToDto(u *domain.UserModel) *UserResponse {
 	return &UserResponse{
 		ID:    u.ID,
