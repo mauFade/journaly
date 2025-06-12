@@ -9,16 +9,16 @@ import (
 )
 
 type UserHandler struct {
-	createService *userservice.CreateUserService
+	userService *userservice.UserService
 }
 
-func NewUserHandler(crs *userservice.CreateUserService) *UserHandler {
+func NewUserHandler(crs *userservice.UserService) *UserHandler {
 	return &UserHandler{
-		createService: crs,
+		userService: crs,
 	}
 }
 
-func (h *UserHandler) Create(w http.ResponseWriter, r *http.Request) {
+func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	var input dto.CreateUserRequest
 	err := json.NewDecoder(r.Body).Decode(&input)
 	if err != nil {
@@ -26,7 +26,7 @@ func (h *UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, err := h.createService.Execute(&input)
+	res, err := h.userService.CreateUser(&input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

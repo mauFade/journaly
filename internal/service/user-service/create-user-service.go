@@ -6,17 +6,7 @@ import (
 	"github.com/mauFade/journaly/internal/dto"
 )
 
-type CreateUserService struct {
-	repository domain.UserRepository
-}
-
-func NewCreateUserService(r domain.UserRepository) *CreateUserService {
-	return &CreateUserService{
-		repository: r,
-	}
-}
-
-func (s *CreateUserService) Execute(req *dto.CreateUserRequest) (*dto.UserResponse, error) {
+func (s *UserService) CreateUser(req *dto.CreateUserRequest) (*dto.UserResponse, error) {
 	u := s.repository.FindByEmail(req.Email)
 
 	if u != nil {
