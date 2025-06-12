@@ -2,8 +2,8 @@ package userservice
 
 import (
 	"github.com/google/uuid"
+	"github.com/mauFade/journaly/internal/application/dto"
 	"github.com/mauFade/journaly/internal/domain"
-	"github.com/mauFade/journaly/internal/dto"
 )
 
 func (s *UserService) CreateUser(req *dto.CreateUserRequest) (*dto.UserResponse, error) {

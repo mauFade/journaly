@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/mauFade/journaly/internal/dto"
-	userservice "github.com/mauFade/journaly/internal/service/user-service"
+	"github.com/mauFade/journaly/internal/application/dto"
+	userservice "github.com/mauFade/journaly/internal/application/service/user-service"
 )
 
 type UserHandler struct {

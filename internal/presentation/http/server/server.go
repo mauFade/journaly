@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	userservice "github.com/mauFade/journaly/internal/application/service/user-service"
 	"github.com/mauFade/journaly/internal/presentation/http/handlers"
-	userservice "github.com/mauFade/journaly/internal/service/user-service"
 )
 
 type Server struct {
