@@ -5,13 +5,13 @@ MIGRATION_NAME ?= unnamed_migration
 .PHONY: create_migration migrate_up migrate_down help
 
 create_migration:
-	migrate create -ext=sql -dir=migrations -seq $(MIGRATION_NAME)
+	migrate create -ext=sql -dir=internal/infrastucture/database/migrations -seq $(MIGRATION_NAME)
 
 migrate_up:
-	migrate -path=migrations -database "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSL_MODE}" -verbose up
+	migrate -path=internal/infrastucture/database/migrations -database "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSL_MODE}" -verbose up
 
 migrate_down:
-	migrate -path=migrations -database "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSL_MODE}" -verbose down 1
+	migrate -path=internal/infrastucture/database/migrations -database "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSL_MODE}" -verbose down 1
 
 help:
 	@echo "Uso das migrations:"
