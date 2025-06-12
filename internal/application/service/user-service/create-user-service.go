@@ -1,6 +1,8 @@
 package userservice
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/mauFade/journaly/internal/application/dto"
 	"github.com/mauFade/journaly/internal/domain"
@@ -19,8 +21,8 @@ func (s *UserService) CreateUser(req *dto.CreateUserRequest) (*dto.UserResponse,
 		return nil, domain.ErrPhoneAlreadyExists
 	}
 
-	u = domain.NewUserModel(uuid.NewString(), req.Name, req.Email, u.GenerateHashPassword(req.Password), req.Phone)
-	err := s.repository.Create(u)
+	u = domain.NewUserModel(uuid.NewString(), req.Name, req.Email, u.GenerateHashPassword(req.Password), req.Phone, time.Now(), time.Now())
+	err := s.repository.Save(u)
 
 	if err != nil {
 		return nil, err

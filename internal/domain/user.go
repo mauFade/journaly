@@ -1,22 +1,30 @@
 package domain
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"time"
+
+	"golang.org/x/crypto/bcrypt"
+)
 
 type UserModel struct {
-	ID       string
-	Name     string
-	Email    string
-	Password string
-	Phone    string
+	ID        string
+	Name      string
+	Email     string
+	Password  string
+	Phone     string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
-func NewUserModel(id, name, email, pass, phone string) *UserModel {
+func NewUserModel(id, name, email, pass, phone string, createdAt, updatedAt time.Time) *UserModel {
 	return &UserModel{
-		ID:       id,
-		Name:     name,
-		Email:    email,
-		Password: pass,
-		Phone:    phone,
+		ID:        id,
+		Name:      name,
+		Email:     email,
+		Password:  pass,
+		Phone:     phone,
+		CreatedAt: createdAt,
+		UpdatedAt: updatedAt,
 	}
 }
 

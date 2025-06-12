@@ -7,7 +7,10 @@ import (
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	userservice "github.com/mauFade/journaly/internal/application/service/user-service"
 	"github.com/mauFade/journaly/internal/infrastucture/database"
+	"github.com/mauFade/journaly/internal/infrastucture/database/repository"
+	"github.com/mauFade/journaly/internal/presentation/http/server"
 )
 
 func getEnv(key, defaultValue string) string {
@@ -39,4 +42,16 @@ func main() {
 		log.Fatal("Error connecting to DB: " + err.Error())
 	}
 
+	ur := repository.NewUserRepository(db)
+	us := userservice.NewUserService(ur)
+
+	p := getEnv("HTTP_PORT", "8080")
+	srv := server.NewServer(us, p)
+	srv.ConfigureRoutes()
+
+	if err := srv.Start(); err != nil {
+		log.Fatal("error starting http server.")
+	}
+
+	log.Println("HTTP server running at " + p)
 }
