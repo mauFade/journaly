@@ -41,6 +41,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Error connecting to DB: " + err.Error())
 	}
+	defer db.Close()
 
 	ur := repository.NewUserRepository(db)
 	us := userservice.NewUserService(ur)
@@ -52,6 +53,4 @@ func main() {
 	if err := srv.Start(); err != nil {
 		log.Fatal("error starting http server.")
 	}
-
-	log.Println("HTTP server running at " + p)
 }

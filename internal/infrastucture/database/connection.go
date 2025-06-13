@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"log"
 
 	_ "github.com/lib/pq"
 )
@@ -13,7 +14,6 @@ func ConnectDB(connStr string) (*sql.DB, error) {
 		return nil, err
 	}
 
-	defer db.Close()
-
+	log.Println("Connected to DB!")
 	return db, nil
 }

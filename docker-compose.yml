@@ -1,21 +1,22 @@
 services:
-  # web:
-  #   build: .
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - .:/usr/src/app
-  #   command: air cmd/main.go -b 0.0.0.0
-  #   depends_on:
-  #     - postgres
+  web:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "8081:8081"
+    volumes:
+      - .:/usr/src/app
+    command: air cmd/app/main.go -b 0.0.0.0
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:16-alpine
     container_name: journaly-db
     restart: unless-stopped
     environment:
+      POSTGRES_HOST: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: journaly

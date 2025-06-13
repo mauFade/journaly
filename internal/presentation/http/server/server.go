@@ -1,6 +1,7 @@
 package server
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -34,5 +35,6 @@ func (s *Server) Start() error {
 		Addr:    ":" + s.port,
 		Handler: s.router,
 	}
+	log.Println("HTTP server running at " + s.port)
 	return s.server.ListenAndServe()
 }
