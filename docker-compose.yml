@@ -13,28 +13,15 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    container_name: journaly-db
-    restart: unless-stopped
     environment:
-      POSTGRES_HOST: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: journaly
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_HOST=${DB_HOST}
     ports:
-      - "5432:5432"
+      - ${DB_PORT:-5432}:${DB_PORT:-5432}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - postgres-db:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
-
-networks:
-  app-network:
-    driver: bridge
+  postgres-db:
