@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	"github.com/mauFade/journaly/internal/domain"
 )
@@ -41,8 +42,30 @@ func (r *UserRepository) Save(u *domain.UserModel) error {
 }
 
 func (r *UserRepository) FindByEmail(e string) *domain.UserModel {
-	return nil
+	var u domain.UserModel
+	var createdAt, updatedAt time.Time
+
+	err := r.db.QueryRow(`
+		SELECT id, name, email, phone, created_at, updated_at
+		FROM users WHERE email = $1
+	`, e).Scan(
+		&u.ID,
+		&u.Name,
+		&u.Email,
+		&u.Phone,
+		&createdAt,
+		&updatedAt,
+	)
+
+	if err != nil {
+		return nil
+	}
+
+	u.CreatedAt = createdAt
+	u.UpdatedAt = updatedAt
+	return &u
 }
+
 func (r *UserRepository) FindByPhone(p string) *domain.UserModel {
 	return nil
 }

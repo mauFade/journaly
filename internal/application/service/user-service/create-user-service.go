@@ -1,6 +1,7 @@
 package userservice
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -11,6 +12,7 @@ import (
 func (s *UserService) CreateUser(req *dto.CreateUserRequest) (*dto.UserResponse, error) {
 	u := s.repository.FindByEmail(req.Email)
 
+	fmt.Println(u)
 	if u != nil {
 		return nil, domain.ErrEmailAlreadyExists
 	}
