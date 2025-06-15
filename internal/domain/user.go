@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"fmt"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -36,4 +37,9 @@ func (u *UserModel) GenerateHashPassword(pass string) string {
 	}
 
 	return string(hash)
+}
+
+func (u *UserModel) ComparePasswords(p string) error {
+	fmt.Println(u.Password, p)
+	return bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(p))
 }

@@ -28,6 +28,7 @@ func (s *Server) ConfigureRoutes() {
 	userHandler := handlers.NewUserHandler(s.userService)
 
 	s.router.Post("/users", userHandler.CreateUser)
+	s.router.Post("/auth", userHandler.Authenticate)
 }
 
 func (s *Server) Start() error {

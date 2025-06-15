@@ -46,12 +46,13 @@ func (r *UserRepository) FindByEmail(e string) *domain.UserModel {
 	var createdAt, updatedAt time.Time
 
 	err := r.db.QueryRow(`
-		SELECT id, name, email, phone, created_at, updated_at
+		SELECT id, name, email, password, phone, created_at, updated_at
 		FROM users WHERE email = $1
 	`, e).Scan(
 		&u.ID,
 		&u.Name,
 		&u.Email,
+		&u.Password,
 		&u.Phone,
 		&createdAt,
 		&updatedAt,
@@ -67,5 +68,27 @@ func (r *UserRepository) FindByEmail(e string) *domain.UserModel {
 }
 
 func (r *UserRepository) FindByPhone(p string) *domain.UserModel {
-	return nil
+	var u domain.UserModel
+	var createdAt, updatedAt time.Time
+
+	err := r.db.QueryRow(`
+		SELECT id, name, email, password, phone, created_at, updated_at
+		FROM users WHERE phone = $1
+	`, p).Scan(
+		&u.ID,
+		&u.Name,
+		&u.Email,
+		&u.Password,
+		&u.Phone,
+		&createdAt,
+		&updatedAt,
+	)
+
+	if err != nil {
+		return nil
+	}
+
+	u.CreatedAt = createdAt
+	u.UpdatedAt = updatedAt
+	return &u
 }
