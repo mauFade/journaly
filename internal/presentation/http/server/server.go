@@ -7,6 +7,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	userservice "github.com/mauFade/journaly/internal/application/service/user-service"
 	"github.com/mauFade/journaly/internal/presentation/http/handlers"
+	"github.com/mauFade/journaly/internal/presentation/http/middleware"
 )
 
 type Server struct {
@@ -25,10 +26,17 @@ func NewServer(us *userservice.UserService, p string) *Server {
 }
 
 func (s *Server) ConfigureRoutes() {
+	authMiddlware := middleware.NewAuthMiddleware(s.userService)
+
 	userHandler := handlers.NewUserHandler(s.userService)
 
 	s.router.Post("/users", userHandler.CreateUser)
 	s.router.Post("/auth", userHandler.Authenticate)
+
+	s.router.Group(func(r chi.Router) {
+		r.Use(authMiddlware.Authenticate)
+
+	})
 }
 
 func (s *Server) Start() error {
