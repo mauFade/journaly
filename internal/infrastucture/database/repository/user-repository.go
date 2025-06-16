@@ -2,7 +2,6 @@ package repository
 
 import (
 	"database/sql"
-	"fmt"
 	"time"
 
 	"github.com/mauFade/journaly/internal/domain"
@@ -25,8 +24,6 @@ func (r *UserRepository) Save(u *domain.UserModel) error {
 		return err
 	}
 	defer stmt.Close()
-
-	fmt.Println(stmt, "STMT")
 
 	_, err = stmt.Exec(
 		u.ID,
