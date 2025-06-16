@@ -9,6 +9,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	userservice "github.com/mauFade/journaly/internal/application/service/user-service"
+	"github.com/mauFade/journaly/internal/domain"
 )
 
 type AuthMiddleware struct {
@@ -20,10 +21,6 @@ func NewAuthMiddleware(s *userservice.UserService) *AuthMiddleware {
 		s: s,
 	}
 }
-
-type ctxKey string
-
-const UserKey ctxKey = "userID"
 
 func (m *AuthMiddleware) Authenticate(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -63,7 +60,7 @@ func (m *AuthMiddleware) Authenticate(next http.Handler) http.Handler {
 				return
 			}
 
-			ctx := context.WithValue(r.Context(), UserKey, userID)
+			ctx := context.WithValue(r.Context(), domain.UserKey, userID)
 
 			next.ServeHTTP(w, r.WithContext(ctx))
 		} else {

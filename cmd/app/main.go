@@ -7,6 +7,7 @@ import (
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	journalservice "github.com/mauFade/journaly/internal/application/service/journal-service"
 	userservice "github.com/mauFade/journaly/internal/application/service/user-service"
 	"github.com/mauFade/journaly/internal/infrastucture/database"
 	"github.com/mauFade/journaly/internal/infrastucture/database/repository"
@@ -44,10 +45,13 @@ func main() {
 	defer db.Close()
 
 	ur := repository.NewUserRepository(db)
+	jr := repository.NewJournalRepository(db)
+
 	us := userservice.NewUserService(ur)
+	js := journalservice.NewJournalService(jr)
 
 	p := getEnv("HTTP_PORT", "8080")
-	srv := server.NewServer(us, p)
+	srv := server.NewServer(us, js, p)
 	srv.ConfigureRoutes()
 
 	if err := srv.Start(); err != nil {
