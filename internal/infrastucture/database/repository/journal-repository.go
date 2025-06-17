@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"time"
 
+	"github.com/lib/pq"
 	"github.com/mauFade/journaly/internal/domain"
 )
 
@@ -29,7 +30,7 @@ func (r *JournalRepository) Save(j *domain.JournalModel) error {
 		j.UserID,
 		j.Title,
 		j.Content,
-		j.Tags,
+		pq.StringArray(j.Tags),
 		j.WordCount,
 		j.CreatedAt,
 		j.UpdatedAt,

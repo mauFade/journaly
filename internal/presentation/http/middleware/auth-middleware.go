@@ -25,7 +25,6 @@ func NewAuthMiddleware(s *userservice.UserService) *AuthMiddleware {
 func (m *AuthMiddleware) Authenticate(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		apiKey := r.Header.Get("X-API-KEY")
-
 		w.Header().Set("Content-Type", "application/json")
 
 		if apiKey == "" {
