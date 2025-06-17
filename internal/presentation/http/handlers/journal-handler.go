@@ -41,3 +41,15 @@ func (h *JournalHandler) CreateJournal(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(res)
 }
+
+func (h *JournalHandler) ListUserJournals(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	userId := r.Context().Value(domain.UserKey).(string)
+	res, err := h.journalService.ListUserJournals(userId)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"message": err.Error()})
+		return
+	}
+	json.NewEncoder(w).Encode(res)
+}

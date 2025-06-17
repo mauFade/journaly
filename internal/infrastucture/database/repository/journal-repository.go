@@ -81,12 +81,14 @@ func (r *JournalRepository) GetByUser(userId string) ([]*domain.JournalModel, er
 
 	for rows.Next() {
 		var j domain.JournalModel
+		var tags pq.StringArray
+
 		err := rows.Scan(
 			&j.ID,
 			&j.UserID,
 			&j.Title,
 			&j.Content,
-			&j.Tags,
+			&tags,
 			&j.WordCount,
 			&j.CreatedAt,
 			&j.UpdatedAt,
@@ -94,6 +96,7 @@ func (r *JournalRepository) GetByUser(userId string) ([]*domain.JournalModel, er
 		if err != nil {
 			return nil, err
 		}
+		j.Tags = []string(tags)
 		journals = append(journals, &j)
 	}
 	if err = rows.Err(); err != nil {

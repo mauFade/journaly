@@ -40,6 +40,7 @@ func (s *Server) ConfigureRoutes() {
 	s.router.Group(func(r chi.Router) {
 		r.Use(authMiddlware.Authenticate)
 		r.Post("/journals", journalHandler.CreateJournal)
+		r.Get("/journals", journalHandler.ListUserJournals)
 	})
 }
 
