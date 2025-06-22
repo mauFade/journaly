@@ -53,3 +53,21 @@ func (h *JournalHandler) ListUserJournals(w http.ResponseWriter, r *http.Request
 	}
 	json.NewEncoder(w).Encode(res)
 }
+
+func (h *JournalHandler) Update(w http.ResponseWriter, r *http.Request) {
+	var input dto.UpdateJournalRequest
+	err := json.NewDecoder(r.Body).Decode(&input)
+	w.Header().Set("Content-Type", "application/json")
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{"message": err.Error()})
+		return
+	}
+	res, err := h.journalService.UpdateJournal(&input)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"message": err.Error()})
+		return
+	}
+	json.NewEncoder(w).Encode(res)
+}

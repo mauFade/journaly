@@ -41,6 +41,7 @@ func (s *Server) ConfigureRoutes() {
 		r.Use(authMiddlware.Authenticate)
 		r.Post("/journals", journalHandler.CreateJournal)
 		r.Get("/journals", journalHandler.ListUserJournals)
+		r.Put("/journals", journalHandler.Update)
 	})
 }
 
