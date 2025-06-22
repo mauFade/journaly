@@ -13,6 +13,14 @@ type CreateJournalRequest struct {
 	Tags      []string `json:"tags"`
 }
 
+type UpdateJournalRequest struct {
+	ID        string   `json:"id"`
+	Title     string   `json:"title"`
+	Content   string   `json:"content"`
+	WordCount int      `json:"word_count"`
+	Tags      []string `json:"tags"`
+}
+
 type JournalResponse struct {
 	ID        string    `json:"id"`
 	UserID    string    `json:"user_id"`
